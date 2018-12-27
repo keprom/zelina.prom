@@ -18,6 +18,10 @@ echo "<input type=hidden name=period_id value=".$period_id." >";
         <td>Другой номер счетфактуры:</td>
         <td><input name=shet2 value='<?php echo $firm->shet2; ?>'></td>
     </tr>
+	<tr>
+		<td>Последний номер счета-фактуры:</td>
+        <td><input type="text" disabled value="<?php echo $max_schet_number; ?>"><br><br></td>
+	</tr>
     <tr>
         <td>Дата выдачи накладной(пустой если последний день месяца):</td>
         <td><input name=data_nakl value='<?php echo $firm->data_nakl; ?>'></td>

@@ -1681,12 +1681,13 @@ class Billing extends Controller
 					where period.id=sprav.value) ;
 		insert into industry.oplata 
 			(firm_id,data,document_number,payment_number_id,value,nds)
-			select industry.firm_id_by_dogovor(dog) as firm_id,data,n_dokum, industry.schet_id_by_name(schet),
+			select industry.firm_id_by_nomer1c(nomer1c) as firm_id,data,n_dokum, industry.schet_id_by_name(schet),
 			sum/(1+industry.current_nds()/100),industry.current_nds() from industry.oplata_buf 
-			where industry.firm_id_by_dogovor(dog) is not null and industry.schet_id_by_name(schet) is not null
+			where industry.firm_id_by_nomer1c(nomer1c) is not null and industry.schet_id_by_name(schet) is not null
 			AND oplata_buf.vo <> 4"
 			);
-		$this->db->query(
+
+        $this->db->query(
             "DELETE FROM industry.fine_oplata WHERE data BETWEEN
                (SELECT period.begin_date FROM industry.period
                      LEFT JOIN industry.sprav ON sprav.name='current_period'
@@ -1697,8 +1698,7 @@ class Billing extends Controller
              INSERT INTO industry.fine_oplata
                 (firm_id,data,document_number,payment_number_id,value,nds)
                 SELECT 
-                    industry.firm_id_by_dogovor(dog) AS firm_id,
-					--industry.firm_id_by_nomer1c(nomer1c) AS firm_id,
+					industry.firm_id_by_nomer1c(nomer1c) AS firm_id,
                     data,
                     n_dokum, 
                     industry.schet_id_by_name(schet),
@@ -1706,11 +1706,10 @@ class Billing extends Controller
                     industry.current_nds() 
                 FROM industry.oplata_buf
                 WHERE 
-				industry.firm_id_by_dogovor(dog) IS NOT NULL 
-				--firm_id_by_nomer1c(nomer1c) IS NOT NULL 
+				industry.firm_id_by_nomer1c(nomer1c) IS NOT NULL 
                 AND industry.schet_id_by_name(schet) IS NOT NULL
                 AND oplata_buf.vo = 4"
-        );	
+        );
 		redirect ("billing");
 	}
 	function jpeg()

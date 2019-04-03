@@ -16,7 +16,7 @@ echo "<input type=hidden name=period_id value=".$period_id." >";
     </tr>
     <tr>
         <td>Другой номер счетфактуры:</td>
-        <td><input name=shet2 value='<?php echo $firm->shet2; ?>'></td>
+        <td><input name=shet2 value='0<?php echo $r->schet_id; ?>'></td>
     </tr>
 	<tr>
 		<td>Последний номер счета-фактуры:</td>

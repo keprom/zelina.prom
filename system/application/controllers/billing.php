@@ -1194,7 +1194,6 @@ class Billing extends Controller
                 echo "Данный номер 0{$schet_id} был ранее присвоен #{$dup_schet->firm_dogovor} {$dup_schet->firm_name} в счет-фактуре за {$dup_schet->period_name}";
                 die();
             }
-            die();
             $this->db->where('period_id', $_POST['period_id']);
             $this->db->where('firm_id', $_POST['firm_id']);
             $this->db->update('industry.schetfactura_date', array(
@@ -1212,30 +1211,20 @@ class Billing extends Controller
             ));
         }
         #end of added
-
         if (!isset($_POST['html'])) {
             if (isset($_POST['new_schetfactura'])) {
                 $string = $this->load->view("reports/schetfactura_new", $data, TRUE);
-
-
                 $this->load->library("pdf/pdf");
-
                 $this->pdf->SetSubject('TCPDF Tutorial');
                 $this->pdf->SetKeywords('TCPDF, PDF, example, test, guide');
                 $this->pdf->SetAutoPageBreak(TRUE);
-                // set font
                 $this->pdf->SetFont('dejavusans', '', 9);
-
-                // add a page
                 $this->pdf->AddPage('P');
-
                 $this->pdf->writeHTML($string);
-
-                //Close and output PDF document
                 $this->pdf->Output('example_001.pdf', 'I');
-            }
-            if (isset($_POST['nakladnaya']))
+            } elseif (isset($_POST['nakladnaya'])){
                 $this->load->view("reports/nakladnaya", $data);
+            }
         } else {
             $this->load->view("reports/schetfactura2", $data);
         }
